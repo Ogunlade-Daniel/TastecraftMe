@@ -1,0 +1,244 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin signup</title>
+
+    <link rel="stylesheet" href="{% static 'fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-icons-1.11.3/bootstrap-icons-1.11.3/font/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'CAOS.file.v-1.5/style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/loader.css' %}">
+    <link rel="stylesheet" href="{% static 'caos-V-2.0-main/caos.css' %}">
+    <link rel="icon" href="{% static 'images/Tastecraft.JPG' %}">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
+        :root {
+            --primary: #ff9800;
+            --secondary: #ffb74d;
+            --accent: #fffbe7;
+            --card-bg: #fff3e0ee;
+            --input-bg: #fff;
+            --input-border: #e0e0e0;
+            --input-focus: #ff9800;
+            --btn-bg: linear-gradient(90deg, #ff9800, #ffb74d);
+            --btn-hover: #fffbe7;
+            --shadow: 0 8px 32px 0 rgba(255, 152, 0, 0.15);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Poppins', sans-serif;
+        }
+        html, body {
+            min-height: 100vh;
+            width: 100vw;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #232526;
+        }
+        .wrapper {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: 2rem;
+            max-width: 420px;
+            width: 100%;
+            padding: 2.5rem 2rem 2rem 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(8px);
+            border: 1.5px solid #ffb74d55;
+        }
+        .title-text {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        .h5 {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .form-container {
+            width: 100%;
+        }
+        .form-inner {
+            width: 100%;
+        }
+        .form-inner form {
+            width: 100%;
+        }
+        .form-inner form .field {
+            position: relative;
+            margin-bottom: 1.3rem;
+        }
+        .form-inner form .field input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.7rem;
+            border-radius: 1.2rem;
+            border: 1.5px solid var(--input-border);
+            background: var(--input-bg);
+            font-size: 1.08rem;
+            color: #232526;
+            transition: border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px #0001;
+        }
+        .form-inner form .field input:focus {
+            border: 1.5px solid var(--input-focus);
+            outline: none;
+            box-shadow: 0 4px 16px #ff7e5f22;
+        }
+        .form-inner form .field input::placeholder {
+            color: #bdbdbd;
+            font-size: 1rem;
+            opacity: 1;
+        }
+        .form-inner form .field .icons {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--primary);
+            z-index: 2;
+        }
+        .form-inner form .field .icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #bdbdbd;
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.2s;
+        }
+        .form-inner form .field .icon:hover {
+            color: var(--primary);
+        }
+        .btn {
+            width: 100%;
+            padding: 0.85rem 0;
+            border: none;
+            border-radius: 1.2rem;
+            background: var(--btn-bg);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px #ff7e5f33;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover {
+            background: var(--btn-hover);
+            color: var(--primary);
+            box-shadow: 0 4px 16px #feb47b44;
+        }
+        .text-center.mt-4.mb-2 {
+            margin-top: 2rem !important;
+            margin-bottom: 1.2rem !important;
+        }
+        .title-text.ms-4 {
+            margin-left: 0 !important;
+            color: black;
+            font-size: 1rem;
+        }
+        .title-text.ms-4 a {
+            color: var(--secondary);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .wrapper {
+                padding: 1.2rem 0.5rem 1.5rem 0.5rem;
+                max-width: 98vw;
+            }
+            .title {
+                font-size: 1.5rem;
+            }
+            .h5 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
+
+    <div class="wrapper">
+      <div class="title-text">
+        <div class="title signup">Sign in Your Admin</div>
+        <h5 style="font-size: 20px; margin-top: 20px;" class="title h5">Sign Up</h5>
+      </div>
+      <div class="form-container">
+        <div class="form-inner">
+          <form class="signup" method="post" action="">
+            {% csrf_token %}
+            <div class="field">
+              <i class="fa fa-user icons"></i>
+              <input type="text" name="fullname" placeholder="Full Name" required>
+            </div>
+            <div class="field">
+              <i class="fa fa-user icons"></i>
+              <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="field">
+              <i class="fa fa-envelope icons"></i>
+              <input type="text" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="field">
+              <i class="fa fa-lock icons"></i>
+              <i class="fa fa-eye icon" onclick="togglePassword('signupPassword', this)"></i>
+              <input type="password" name="password" id="signupPassword" placeholder="Password" required>
+            </div>
+            <div class="text-center mt-4 mb-2">
+                <button type="submit" class="btn">Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        }
+      }
+    </script>
+    {% for message in messages %}
+      <input type="hidden" id="get_message" value="{{message}}">
+      <script>
+        var get_message = document.getElementById('get_message').value;
+        alert(get_message)
+      </script>
+    {% endfor %}
+
+
+    <script src="{% static 'CAOS.file.v-1.5/script.js' %}"></script>
+    <script src="{% static 'caos-V-2.0-main/caos.js' %}"></script>
+    <script src="{% static 'styles/style.js' %}"></script>
+    <script src="{% static 'bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/js/bootstrap.bundle.js' %}"></script>
+</body>
+</html>

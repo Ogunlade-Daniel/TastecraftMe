@@ -1,0 +1,735 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tastecraft - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{% static 'caos-V-2.0-main/caos.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/loader.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/admin_dashboard.css' %}">
+    <link rel="icon" href="{% static 'images/Tastecraft.jpg' %}">
+
+</head>
+<body>
+
+    
+    <!-- <div class="spinner-overlay">
+        <div class="spinner"></div>
+    </div> -->
+
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav id="adminSidebar" class="sidebar d-flex flex-column d-md-block d-none">
+            <div class="sidebar-header d-flex align-items-center justify-content-between">
+                <h2 class="mb-0"><i class="fas fa-utensils"></i> <span class="d-none d-md-inline">Tastecraft
+                        Admin</span></h2>
+            </div>
+
+            <div class="sidebar-menu nav nav-pills flex-column mb-auto" id="sidebarTab" role="tablist">
+                <a href="{% url 'admin_dashboard' %}?tab=dashboard"
+                    class="nav-link {% if active_tab == 'dashboard' %}active{% endif %}" id="v-pills-dashboard-tab"
+                    data-bs-toggle="pill" data-bs-target="#dashboard" role="tab" aria-controls="dashboard"
+                    aria-selected="{% if active_tab == 'dashboard' %}true{% else %}false{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i> <span class="d-none d-md-inline">Dashboard</span>
+                </a>
+                <a href="{% url 'admin_dashboard' %}?tab=orders"
+                    class="nav-link {% if active_tab == 'orders' %}active{% endif %}" id="v-pills-orders-tab"
+                    data-bs-toggle="pill" data-bs-target="#orders" role="tab" aria-controls="orders"
+                    aria-selected="{% if active_tab == 'orders' %}true{% else %}false{% endif %}">
+                    <i class="fas fa-receipt"></i> <span class="d-none d-md-inline">Order Management</span>
+                </a>
+                <a href="{% url 'admin_dashboard' %}?tab=menu"
+                    class="nav-link {% if active_tab == 'menu' %}active{% endif %}" id="v-pills-menu-tab"
+                    data-bs-toggle="pill" data-bs-target="#menu" role="tab" aria-controls="menu"
+                    aria-selected="{% if active_tab == 'menu' %}true{% else %}false{% endif %}">
+                    <i class="fas fa-book"></i> <span class="d-none d-md-inline">Menu Management</span>
+                </a>
+                <a href="{% url 'admin_dashboard' %}?tab=users"
+                    class="nav-link {% if active_tab == 'users' %}active{% endif %}" id="v-pills-users-tab"
+                    data-bs-toggle="pill" data-bs-target="#users" role="tab" aria-controls="users"
+                    aria-selected="{% if active_tab == 'users' %}true{% else %}false{% endif %}">
+                    <i class="fas fa-users"></i> <span class="d-none d-md-inline">Users</span>
+                </a>
+                <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                        class="fas fa-sign-out-alt"></i>Sign Out</a>
+
+            </div>
+        </nav>
+
+        <!-- offcanvas -->
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"><i class="fas fa-utensils"></i> Tastecraft Admin</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="sidebar-menu nav nav-pills flex-column mb-auto" id="sidebarTab" role="tablist">
+                            <a href="{% url 'admin_dashboard' %}?tab=dashboard"
+                                class="nav-link text-li {% if active_tab == 'dashboard' %}active{% endif %}" id="v-pills-dashboard-tab"
+                                data-bs-toggle="pill" data-bs-target="#dashboard" role="tab" aria-controls="dashboard"
+                                aria-selected="{% if active_tab == 'dashboard' %}true{% else %}false{% endif %}">
+                                <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
+                            </a>
+                            <a href="{% url 'admin_dashboard' %}?tab=orders" class="nav-link {% if active_tab == 'orders' %}active{% endif %}"
+                                id="v-pills-orders-tab" data-bs-toggle="pill" data-bs-target="#orders" role="tab" aria-controls="orders"
+                                aria-selected="{% if active_tab == 'orders' %}true{% else %}false{% endif %}">
+                                <i class="fas fa-receipt"></i> <span>Order Management</span>
+                            </a>
+                            <a href="{% url 'admin_dashboard' %}?tab=menu" class="nav-link {% if active_tab == 'menu' %}active{% endif %}"
+                                id="v-pills-menu-tab" data-bs-toggle="pill" data-bs-target="#menu" role="tab" aria-controls="menu"
+                                aria-selected="{% if active_tab == 'menu' %}true{% else %}false{% endif %}">
+                                <i class="fas fa-book"></i> <span>Menu Management</span>
+                            </a>
+                            <a href="{% url 'admin_dashboard' %}?tab=users" class="nav-link {% if active_tab == 'users' %}active{% endif %}"
+                                id="v-pills-users-tab" data-bs-toggle="pill" data-bs-target="#users" role="tab" aria-controls="users"
+                                aria-selected="{% if active_tab == 'users' %}true{% else %}false{% endif %}">
+                                <i class="fas fa-users"></i> <span>Users</span>
+                            </a>
+                            <a href="#" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                    class="fas fa-sign-out-alt"></i>Sign Out</a>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Signout Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Are you sure you want to sign out?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'login' %}" class="btn btn-danger">Yes</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content with Sidebar Tabs -->
+        <main class="main-content" style="margin-left:var(--sidebar-width);">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h3 id="sectionTitle">Dashboard Overview</h3>
+                    <p>Welcome back, Admin!</p>
+                </div>
+                <div class="header-right">
+                    {% comment %} <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">0</span>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="user-profile">
+                        <img src="" alt="Admin">
+                    </div> {% endcomment %}
+                    <span class="fa fa-bars d-lg-none d-md-none me-4" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation"></span>
+                </div>
+            </header>
+
+            <div class="tab-content" id="sidebarTabContent">
+                <!-- Dashboard Tab -->
+                <div class="tab-pane fade {% if active_tab == 'dashboard' %}show active{% endif %}" id="dashboard"
+                    role="tabpanel" aria-labelledby="dashboard-link">
+
+                    <!-- Metrics Cards Overview -->
+                    <div class="metrics-row mb-4">
+                        <a href="#orders" class="metric-card text-decoration-none" data-bs-toggle="pill" data-bs-target="#orders" role="tab" aria-controls="orders" onclick="switchToOrdersTab(event)">
+                            <div class="metric-info">
+                                <h3>₦{{ total_revenue|intcomma }}</h3>
+                                <p>Total Revenue</p>
+                                <span class="positive">+₦{{ revenue_growth|default:'0'|intcomma }} <i class="fas fa-arrow-up"></i></span>
+                            </div>
+                            <div class="metric-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                        </a>
+                        <a href="#menu" class="metric-card text-decoration-none" data-bs-toggle="pill" data-bs-target="#menu" role="tab" aria-controls="menu" onclick="switchToMenuTab(event)">
+                            <div class="metric-info">
+                                <h3>{{ menu_count }}</h3>
+                                <p>Menu Items</p>
+                                <span class="positive">+{{ menu_growth|default:'0' }} new <i class="fas fa-arrow-up"></i></span>
+                            </div>
+                            <div class="metric-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </a>
+                        <a href="#orders" class="metric-card text-decoration-none" data-bs-toggle="pill" data-bs-target="#orders" role="tab" aria-controls="orders" onclick="switchToOrdersTab(event)">
+                            <div class="metric-info">
+                                <h3>{{ order_count|intcomma }}</h3>
+                                <p>Total Orders</p>
+                                <span class="positive">+{{ order_growth|default:'0' }} today <i class="fas fa-arrow-up"></i></span>
+                            </div>
+                            <div class="metric-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                        </a>
+                        <a href="#users" class="metric-card text-decoration-none" data-bs-toggle="pill" data-bs-target="#users" role="tab" aria-controls="users" onclick="switchToUsersTab(event)">
+                            <div class="metric-info">
+                                <h3>{{ customer_count|intcomma }}</h3>
+                                <p>Customers</p>
+                                <span class="positive">+{{ customer_growth|default:'0' }} new <i class="fas fa-user-plus"></i></span>
+                            </div>
+                            <div class="metric-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </a>
+                    </div>
+                    <script>
+                        function switchToOrdersTab(event) {
+                            event.preventDefault();
+                            var ordersTab = document.querySelector('#sidebarTab .nav-link[data-bs-target="#orders"]');
+                            if (ordersTab) { ordersTab.click(); }
+                        }
+                        function switchToMenuTab(event) {
+                            event.preventDefault();
+                            var menuTab = document.querySelector('#sidebarTab .nav-link[data-bs-target="#menu"]');
+                            if (menuTab) { menuTab.click(); }
+                        }
+                        function switchToUsersTab(event) {
+                            event.preventDefault();
+                            var usersTab = document.querySelector('#sidebarTab .nav-link[data-bs-target="#users"]');
+                            if (usersTab) { usersTab.click(); }
+                        }
+                    </script>
+
+                    <!-- Most Popular Order Items -->
+                    <div class="activity-card mb-4">
+                        <h4 class="mb-3">Most Popular Order Items</h4>
+                        <div class="row g-3">
+                            {% for item in popular_order_items %}
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="card h-100" style="background:white;color:var(--dark-color);">
+                                    {% if item.image %}
+                                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}"
+                                        style="height:120px;object-fit:cover;">
+                                    {% else %}
+                                    <img src="{% static 'images/chef77.jpg' %}" class="card-img-top"
+                                        alt="{{ item.name }}" style="height:120px;object-fit:cover;">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ item.name }}</h5>
+                                        <p class="card-text mb-1"><strong>Orders:</strong> {{ item.orders_count|default:'0' }}</p>
+                                        <p class="card-text mb-1"><strong>Price:</strong> ₦{{ item.price|default:'0'|intcomma }}</p>
+                                        <!-- <p class="card-text mb-1"><strong>Revenue:</strong> ₦{{ item.revenue|default:'0'|intcomma }}</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="col-12">
+                                <p>No popular order items yet.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders Overview -->
+                    <div class="activity-card mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h4 class="mb-0">Recent Orders</h4>
+                            <a href="#orders" class="btn btn-sm btn-outline-warning" id="viewAllOrdersBtn" data-bs-toggle="pill" role="tab"
+                                aria-controls="orders" onclick="switchToOrdersTab(event)">View All</a>
+                            <script>
+                                // Function to switch to the Order Management tab programmatically
+                                function switchToOrdersTab(event) {
+                                    event.preventDefault();
+                                    // Find the sidebar tab link for orders
+                                    var ordersTab = document.querySelector('#sidebarTab .nav-link[data-bs-target="#orders"]');
+                                    if (ordersTab) {
+                                        ordersTab.click();
+                                    }
+                                }
+                            </script>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer</th>
+                                        <th>Items</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in recent_orders %}
+                                    <tr>
+                                        <td>#ORD-{{ order.id }}</td>
+                                        <td>{{ order.customer.get_full_name|default:order.customer.username }}</td>
+                                        <td>
+                                            {% for item in order.items.all %}
+                                            {{ item.name }}{% if not forloop.last %}, {% endif %}
+                                            {% empty %}No items{% endfor %}
+                                        </td>
+                                        <td>
+                                            {% if order.status == 'Pending' %}
+                                            <span class="badge bg-warning">Pending</span>
+                                            {% elif order.status == 'Confirmed' %}
+                                            <span class="badge bg-info">Confirmed</span>
+                                            {% elif order.status == 'Completed' %}
+                                            <span class="badge bg-success">Completed</span>
+                                            {% elif order.status == 'Cancelled' %}
+                                            <span class="badge bg-danger">Cancelled</span>
+                                            {% else %}
+                                            <span class="badge bg-secondary">{{ order.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>₦{{ order.total|intcomma }}</td>
+                                        <td>{{ order.date|date:'Y-m-d' }}</td>
+                                        <td><a href="#orders" class="btn btn-sm btn-outline-warning"
+                                                data-bs-toggle="pill" role="tab" aria-controls="orders" onclick="switchToOrdersTab(event)">View</a></td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No recent orders found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Management Tab -->
+                <div class="tab-pane fade {% if active_tab == 'orders' %}show active{% endif %}" id="orders"
+                    role="tabpanel" aria-labelledby="v-pills-orders-tab">
+                    <div class="activity-row">
+                        <div class="activity-card">
+                            <form method="get" class="row align-items-center mb-3" action="">
+                                <input type="hidden" name="tab" value="orders">
+                                <div class="col-md-6">
+                                    <h4>Recent Orders</h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4>Total Revenue: <span class="text-dark">₦{{ total_revenue|intcomma }}</span></h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="search_customer" value="{{ request.GET.search|default:'' }}" placeholder="Search orders by customer or ID...">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" name="item_search" value="{{ request.GET.item_search|default:'' }}" placeholder="Search order items...">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Items</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
+                                        <tr>
+                                            <td>#ORD-{{ order.id }}</td>
+                                            <td>{{ order.customer.get_full_name|default:order.customer.username }}</td>
+                                            <td>
+                                                {% for item in order.items.all %}
+                                                {{ item.name }}{% if not forloop.last %}, {% endif %}
+                                                {% empty %}No items{% endfor %}
+                                            </td>
+                                            <td>₦{{ order.total|intcomma }}</td>
+                                            <td>
+                                                {% if order.status == 'Pending' %}
+                                                <span class="badge bg-warning">Pending</span>
+                                                {% elif order.status == 'Confirmed' %}
+                                                <span class="badge bg-info">Confirmed</span>
+                                                {% elif order.status == 'Completed' %}
+                                                <span class="badge bg-success">Completed</span>
+                                                {% elif order.status == 'Cancelled' %}
+                                                <span class="badge bg-danger">Cancelled</span>
+                                                {% else %}
+                                                <span class="badge bg-secondary">{{ order.status }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-warning" data-id="{{ order.id }}"
+                                                    data-status="{{ order.status }}"
+                                                    data-customer="{{ order.customer.get_full_name|default:order.customer.username }}"
+                                                    data-items="{% for item in order.items.all %}{{ item.name }}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                                                    data-total="{{ order.total|intcomma }}" data-bs-toggle="modal"
+                                                    data-bs-target="#updateOrderStatusModal">View</button>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="6" class="text-center">No orders found.</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <!-- Modal moved outside table for AJAX safety -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Order Status Modal -->
+                <div class="modal fade" id="updateOrderStatusModal" tabindex="-1"
+                    aria-labelledby="updateOrderStatusModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <form id="updateOrderStatusForm" method="post" autocomplete="off">
+                                {% csrf_token %}
+                                <input type="hidden" name="order_id" id="updateOrderId">
+                                <div class="modal-header bg-warning text-dark">
+                                    <h5 class="modal-title" id="updateOrderStatusModalLabel"><i
+                                            class="fas fa-edit me-2"></i>Update Order Status</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold">Customer</label>
+                                            <div class="form-control-plaintext" id="modalCustomer"></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold">Total</label>
+                                            <div class="form-control-plaintext">₦<span id="modalTotal"></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label class="form-label fw-bold">Items</label>
+                                        <div class="form-control-plaintext" id="modalItems"></div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="orderStatusSelect" class="form-label fw-bold">Order Status</label>
+                                        <select class="form-select" id="orderStatusSelect" name="status" required>
+                                            <option value="Pending">Pending</option>
+                                            <option value="Confirmed">Confirmed</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                    <div id="orderStatusSuccess" class="alert alert-success d-none" role="alert">
+                                        Order status updated successfully!
+                                    </div>
+                                    <div id="orderStatusError" class="alert alert-danger d-none" role="alert">
+                                        Failed to update order status.
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-warning">Update Status</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                </tbody>
+                </table>
+
+
+                <!-- Menu Management Tab -->
+                <div class="tab-pane fade {% if active_tab == 'menu' %}show active{% endif %}" id="menu" role="tabpanel" aria-labelledby="menu-link">
+                    <div class="activity-card" style="margin-top:0;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">Menu Management</h4>
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addMenuModal"><i class="fas fa-plus"></i> Add Menu Item</button>
+                        </div>
+                        <div class="row g-2" style="margin-bottom: 10px;">
+                            <form method="get" class="row g-2 align-items-center w-100" action="">
+                                <input type="hidden" name="tab" value="menu">
+                                <div class="col-md-4 col-12">
+                                    <input type="text" class="form-control" name="search" value="{{ request.GET.search|default:'' }}" placeholder="Search menu items...">
+                                </div>
+                                <div class="col-md-3 col-12">
+                                    <select class="form-select" name="category">
+                                        <option value="">All Categories</option>
+                                        {% for cat in categories %}
+                                            <option value="{{ cat.id }}" {% if request.GET.category == cat.id|stringformat:'s' %}selected{% endif %}>{{ cat.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-2 col-12">
+                                    <button type="submit" class="btn btn-warning w-100">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-middle" id="menuTable">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price (₦)</th>
+                                        <th>Available</th>
+                                        <th>Special</th>
+                                        <th>Description</th>
+                                        <th>Image</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in menu_items reversed %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ item.name }}</td>
+                                        <td>{{ item.category.name }}</td>
+                                        <td>{{ item.price|intcomma }}</td>
+                                        <td>{% if item.available %}Yes{% else %}No{% endif %}</td>
+                                        <td>{% if item.special %}Yes{% else %}No{% endif %}</td>
+                                        <td>{{ item.description }}</td>
+                                        <td>
+                                            {% if item.image %}
+                                                <img src="{{ item.image.url }}" alt="{{ item.name }}" style="width:40px;">
+                                            {% else %}
+                                                <img src="{% static 'images/Tastecraft.JPG' %}" alt="{{ item.name }}" style="width:40px;">
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-warning me-1" data-bs-toggle="modal" data-bs-target="#editMenuModal" data-id="{{ item.id }}" data-name="{{ item.name }}" data-category="{{ item.category.id }}" data-price="{{ item.price }}" data-description="{{ item.description }}" data-available="{{ item.available }}" data-special="{{ item.special }}" data-image="{% if item.image %}{{ item.image.url }}{% endif %}"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteMenuModal" data-id="{{ item.id }}" data-name="{{ item.name }}"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="9" class="text-center">No menu items found.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Add Menu Modal -->
+                    <div class="modal fade px-4" id="addMenuModal" tabindex="-1" aria-labelledby="addMenuModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form id="addMenuForm" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="add">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addMenuModalLabel">Add Menu Item</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="addMenuName" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="addMenuName" name="name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="addMenuCategory" class="form-label">Category</label>
+                                                <select class="form-select" id="addMenuCategory" name="category" required>
+                                                    <option value="">Select Category</option>
+                                                    {% if categories %}
+                                                        {% for cat in categories %}
+                                                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <option value="" disabled>No categories found</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="addMenuPrice" class="form-label">Price (₦)</label>
+                                                <input type="number" class="form-control" id="addMenuPrice" name="price" min="0" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="addMenuImage" class="form-label">Image</label>
+                                                <input class="form-control" type="file" id="addMenuImage" name="image" accept="image/*">
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="addMenuDescription" class="form-label">Description</label>
+                                                <textarea class="form-control" id="addMenuDescription" name="description" rows="2"></textarea>
+                                            </div>
+                                            <div class="col-12 form-check ms-2">
+                                                <input type="checkbox" class="form-check-input" id="Available" name="available">
+                                                <label class="form-check-label " for="Available">Available</label>
+                                            </div>
+                                            <div class="col-12 form-check ms-2">
+                                                <input type="checkbox" class="form-check-input" id="Special" name="special">
+                                                <label class="form-check-label" for="Special">Special</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Add Item</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Menu Modal -->
+                    <div class="modal fade" id="editMenuModal" tabindex="-1" aria-labelledby="editMenuModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form id="editMenuForm" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="id" id="editMenuId">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editMenuModalLabel">Edit Menu Item</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="editMenuName" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="editMenuName" name="name" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="editMenuCategory" class="form-label">Category</label>
+                                                <select class="form-select" id="editMenuCategory" name="category" required>
+                                                    <option value="">Select Category</option>
+                                                    {% if categories %}
+                                                        {% for cat in categories %}
+                                                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <option value="" disabled>No categories found</option>
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="editMenuPrice" class="form-label">Price (₦)</label>
+                                                <input type="number" class="form-control" id="editMenuPrice" name="price" min="0" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="editMenuImage" class="form-label">Image</label>
+                                                <input class="form-control" type="file" id="editMenuImage" name="image" accept="image/*">
+                                                <img id="editMenuImagePreview" src="" alt="Preview" style="width:40px;display:none;margin-top:5px;">
+                                            </div>
+                                            <div class="col-12 ">
+                                                <label for="editMenuDescription" class="form-label">Description</label>
+                                                <textarea class="form-control" id="editMenuDescription" name="description" rows="2"></textarea>
+                                            </div>
+                                            <div class="col-12 form-check ms-2">
+                                                <input type="checkbox" class="form-check-input" id="editMenuAvailable" name="available">
+                                                <label class="form-check-label " for="editMenuAvailable">Available</label>
+                                            </div>
+                                            <div class="col-12 form-check ms-2">
+                                                <input type="checkbox" class="form-check-input" id="editMenuSpecial" name="special">
+                                                <label class="form-check-label" for="editMenuSpecial">Special</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Menu Modal -->
+                    <div class="modal fade" id="deleteMenuModal" tabindex="-1" aria-labelledby="deleteMenuModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form id="deleteMenuForm" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="id" id="deleteMenuId">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteMenuModalLabel">Delete Menu Item</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="deleteMenuText">Are you sure you want to delete this menu item?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Users Tab -->
+                <div class="tab-pane fade {% if active_tab == 'users' %}show active{% endif %}" id="users" role="tabpanel" aria-labelledby="users-link">
+                    <div class="activity-card" style="margin-top:0;">
+                        <h4>Users</h4>
+                        <p>Total Users: <strong>{{ users|length }}</strong></p>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Role</th>
+                                        <th>Location</th>
+                                        <th>Action</th>
+                                       <!-- <th>Joined</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users|dictsortreversed:'id' %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ user.get_full_name|default:user.username }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.phone }}</td>
+                                        <td>Customer</td>
+                                        <td>{{ user.location }}</td>
+                                        <td>
+                                            <a href="?tab=orders&search={{ user.get_full_name|default:user.username }}" class="btn btn-sm btn-outline-warning">Orders</a>
+                                        </td>
+                                        <!-- <td>{{ user.date_joined|date:"Y-m-d" }}</td> -->
+                                    </tr>
+                                    {% empty %}
+                                    <tr><td colspan="5" class="text-center">No Customer Found.</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+    </main>
+    </div>
+
+    {% for message in messages %}
+    <input type="hidden" id="get_message" value="{{message}}">
+    {% endfor %}
+
+    <script src="{% static 'CAOS.file.v-1.5/script.js' %}"></script>
+    <script src="{% static 'caos-V-2.0-main/caos.js' %}"></script>
+    <script src="{% static 'styles/style.js' %}"></script>
+    <script src="{% static 'styles/admin_dashboard.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+
+</body>
+</html>

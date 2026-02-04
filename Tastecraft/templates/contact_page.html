@@ -1,0 +1,97 @@
+{% extends "header_footer.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %} Contact - Tastecraft {% endblock title %}
+
+{% block content %}
+<style>
+    body {
+        margin-top: 90px;
+    }
+    .connect .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    .connect .social-links a{
+        color: black !important;
+        font-size: 1.5rem;
+        transition: color 0.3s;
+    }
+    .connect .social-links a:hover {
+        color: var(--orange-color) !important;
+    }
+    .map-responsive {
+        overflow: hidden;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        position: relative;
+    }
+    .map-responsive iframe {
+        border: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+</style>
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2 class="mb-3">Send us a message</h2>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
+            <img src="{% static 'images/about.jpg' %}" alt="Company Logo" class="mb-3 " style="max-width: 180px;">
+            <h4>Serving since 2025</h4>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h5>HEAD OFFICE</h5>
+            <p>UPTECH, Dalemo, Lagos.</p>
+        </div>
+        <div class="col-md-6">
+            <h5>BRANCH</h5>
+            <ul class="list-unstyled">
+                <li>UPTECH, Dalemo, Lagos.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h5>Our Location</h5> 
+            <div class="map-responsive" style="border-radius: 10px; overflow: hidden;">
+                <iframe src="https://www.google.com/maps?q=UPTECH,+Dalemo,+Lagos&output=embed" width="100%" height="350" frameborder="0" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4 connect">
+        <div class="col-md-12">
+            <h5>Connect with us</h5>
+            <div class="social-links">
+                <a href="https://www.facebook.com/" target="_blank" class="me-2"><i class="bi bi-facebook"></i></a>
+                <a href="https://twitter.com/" target="_blank" class="me-2"><i class="bi bi-twitter"></i></a>
+                <a href="https://instagram.com/" target="_blank" class="me-2"><i class="bi bi-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

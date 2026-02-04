@@ -1,0 +1,110 @@
+{% extends "header_footer.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %} Home - Tastecraft {% endblock title %}
+
+{% block content %}
+
+<style>
+  body { margin-top: 90px; background: #fff; }
+  .hero {
+    background: url('{% static "images/about-bg.jpg" %}') center/cover no-repeat;
+    color: #fff;
+    padding: 100px 0 80px 0;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    position: relative;
+  }
+  .hero .overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45); border-radius: 20px;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .menu-category img {
+    border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    width: 100%; height: 160px; object-fit: cover;
+  }
+  .menu-category h5 { margin-top: 10px; font-weight: bold; }
+  .about { background: #f8f9fa; border-radius: 16px; padding: 40px 20px; margin: 40px 0; }
+  .contact { padding: 40px 0; }
+</style>
+
+
+<div class="container">
+  <div class="hero mb-5">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <img src="{% static 'images/chef_image2.png' %}" alt="Tastecraft Logo" style="max-width: 120px; border-radius: 50%; height: 120px; box-shadow: 0 2px 12px rgba(0,0,0,0.15);">
+      <h1 class="display-4 mt-3">Welcome to Tastecraft Restaurant</h1>
+      <p class="lead">Delight in our curated menu and warm hospitality.</p>
+      <a href="/menu" class="btn btn-warning btn-lg mt-4">Browse Full Menu</a>
+    </div>
+  </div>
+  <section class="py-5">
+    <h2 class="text-center mb-4">Menu Categories</h2>
+    <div class="row g-4 menu-category">
+      <div class="col-md-3">
+        <div class="card shadow">
+          <img src="{% static 'images/Appetizer-1.jpg' %}" alt="Appetizers" class="card-img-top">
+          <div class="card-body text-center">
+            <h5 class="card-title">Appetizers</h5>
+            <p class="card-text">Start your meal with our delicious small bites and signature starters.</p>
+              <a href="/menu#cat-appetizers" class="btn btn-outline-warning btn-sm">See Appetizers</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow">
+          <img src="{% static 'images/jollof-and-meat.png' %}" alt="Main Course" class="card-img-top">
+          <div class="card-body text-center">
+            <h5 class="card-title">Main Course</h5>
+            <p class="card-text">Enjoy classic and contemporary dishes crafted with fresh, local ingredients.</p>
+              <a href="/menu#cat-maincourse" class="btn btn-outline-warning btn-sm">See Main Course</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow">
+          <img src="{% static 'images/specials-4.png' %}" alt="Beverages" class="card-img-top">
+          <div class="card-body text-center">
+            <h5 class="card-title">Beverages</h5>
+            <p class="card-text">Refresh yourself with our selection of drinks and beverages.</p>
+              <a href="/menu#cat-beverages" class="btn btn-outline-warning btn-sm">See Beverages</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="card shadow">
+          <img src="{% static 'images/cheese.JPG' %}" alt="Desserts" class="card-img-top">
+          <div class="card-body text-center">
+            <h5 class="card-title">Desserts</h5>
+            <p class="card-text">End on a sweet note with our irresistible desserts and treats.</p>
+              <a href="/menu#cat-desserts" class="btn btn-outline-warning btn-sm">See Desserts</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="about text-center">
+    <h2>About Tastecraft Restaurant</h2>
+    <p class="lead mt-3">Tastecraft Restaurant is dedicated to providing a unique dining experience, blending local and international flavors in a cozy, welcoming atmosphere. Our chefs use the freshest ingredients to create dishes that delight every palate.</p>
+    <a href="/about" class="btn btn-outline-warning mt-2">Learn More</a>
+  </section>
+
+  <section class="contact text-center">
+    <h2>Contact & Reservations</h2>
+    <p class="mt-3">123 Dalemo Alakuko, Food City<br>Phone: (+234) 816-672-9962<br>Email: info@tastecraftrestaurant.com</p>
+    <a href="/contact" class="btn btn-warning btn-lg mt-3">Book a Table</a>
+  </section>
+
+</div>
+
+{% endblock content %}

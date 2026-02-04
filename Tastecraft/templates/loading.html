@@ -1,0 +1,102 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tastecraft</title>
+    <link rel="stylesheet" href="{% static 'fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.3-dist/bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-icons-1.11.3/bootstrap-icons-1.11.3/font/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'CAOS.file.v-1.5/style.css' %}">
+    <link rel="stylesheet" href="{% static 'caos-V-2.0-main/caos.css' %}">    
+    <link rel="stylesheet" href="{% static 'styles/loader.css' %}">
+    <link rel="icon" href="{% static 'images/Tastecraft.jpg' %}">
+    <style>
+        :root{
+        --blue-color: blue;
+        --yellow-color: yellow;
+        --yellow2-color: rgba(234, 255, 0, 0.66);
+        --red-color: red;
+        --black-color: black;
+        --black2-color: transparent;
+        --green-color: green;
+        --white-color: white;
+        --orange-color: orange;
+        --orange2-color: #D4AF37;
+        }
+      .spinner{
+        width: 60px;
+        height: 60px;
+        border: 6px solid var(--white-color);
+        border-top: 6px solid var(--blue-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 100px auto;
+
+      }
+      @keyframes spin{
+        0% {transform: rotate(0deg); }
+        100% {transform: rotate(360deg); }
+      }
+      .spinner-overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: var(--white-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: 1s;
+        opacity: 1;
+        visibility: visible;
+      }
+      .remove{
+        transition: 1s;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      header nav ul li button{
+          position: relative;
+      }
+      header nav ul li .count{
+          position: absolute;
+          margin-left: -8px;
+          top: 1px;
+          background-color: var(--red-color);
+          padding-left: 3px;
+          padding-right: 2px;
+          padding-top: -10px;
+          padding-bottom: 2%;
+          border-radius: 20px;
+      }
+      #navbar.scrolled nav ul li .count {
+        color: var(--white-color);
+      }
+    </style>
+</head>
+<body>
+      <div class="spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
+
+  <script>
+  const loader = document.querySelector('.spinner-overlay');
+
+  // Hide loader after 3 seconds
+  setTimeout(() => {
+    loader.classList.add('remove');
+  }, 2000);
+
+  loader.addEventListener('transitioned', function(){
+    loader.classList.remove('spinner-overlay')
+  });
+  </script>
+</body>
+</html>

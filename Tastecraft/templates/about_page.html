@@ -1,0 +1,80 @@
+{% extends "header_footer.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %} About - Tastecraft {% endblock title %}
+
+{% block content %}
+
+<style>
+     body {
+        margin-top: 90px;
+    }
+    .connect .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    .connect .social-links a{
+        color: black !important;
+        font-size: 1.5rem;
+        transition: color 0.3s;
+    }
+    .connect .social-links a:hover {
+        color: var(--orange-color) !important;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h1 class="mb-3">About Tastecraft</h1>
+            <p>Tastecraft was founded with a passion for bringing authentic, home-cooked flavors to everyone. Since our humble beginnings, we've grown into a vibrant food service provider, blending tradition with innovation to create memorable dining experiences.</p>
+            <p>Our journey is driven by a commitment to excellence, respect for our customers, and a spirit of teamwork and creativity. We believe food is more than sustenance—it's a way to connect, celebrate, and nourish our community.</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="{% static 'images/about.jpg' %}" alt="Tastecraft Chef" class="img-fluid rounded shadow" style="max-width: 300px;">
+            <h4 class="mt-3">Serving since 2025</h4>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h3>Our Vision, Mission & Core Values</h3>
+            <ul>
+                <li><strong>Vision:</strong> To be the leading food service provider in our chosen market, inspiring joy and connection through every meal.</li>
+                <li><strong>Mission:</strong> To deliver the best quality food and service, exceeding the expectations of all our stakeholders.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h4>Corporate Objectives</h4>
+            <ul>
+                <li>Produce quality meals and services of the highest international standard.</li>
+                <li>Identify and exceed the needs of our target markets.</li>
+                <li>Uphold our heritage by serving home-cooked meals in a fast, friendly environment.</li>
+                <li>Promote tourism and community through food.</li>
+                <li>Continually add value to lives by nourishing our community.</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>Spice It Up!</h4>
+            <p>At Tastecraft, we go beyond the ordinary. Our chefs experiment with bold flavors, seasonal ingredients, and creative presentations. From themed nights to chef's specials, we keep your taste buds excited and your experience fresh. Join us for food festivals, cooking classes, and exclusive tasting events—there's always something new to savor!</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h5>HEAD OFFICE</h5>
+            <li>UPTECH, Dalemo, Lagos.</li>
+        </div>
+        <div class="col-md-6">
+            <h5>BRANCH</h5>
+            <ul class="list-unstyled">
+                <li>UPTECH, Dalemo, Lagos.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}

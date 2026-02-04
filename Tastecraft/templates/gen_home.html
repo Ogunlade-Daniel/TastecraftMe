@@ -1,0 +1,132 @@
+{% extends "gen_header_footer.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %} Home - Tastecraft {% endblock title %}
+
+{% block content %}
+<style>
+  body{
+    margin-top: 90px;
+  }
+  .hero-section {
+    background: url('{% static "images/about-bg.jpg" %}');
+    color: #fff;
+    padding: 80px 0 60px 0;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    position: relative;
+  }
+  .hero-section .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+    border-radius: 20px;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .featured-menu img {
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .featured-menu h5 {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  .why-choose {
+    background: orange;
+    border-radius: 16px;
+    padding: 30px 20px;
+    margin: 40px 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+</style>
+
+
+<div class="container">
+  <div class="hero-section mb-5">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <img src="{% static 'images/fried-rice-and-meat.png' %}" alt="Tastecraft Logo" style="max-width: 120px; border-radius: 50%; height: 120px ; box-shadow: 0 2px 12px rgba(0,0,0,0.15);">
+      <h1 class="display-4 mt-3">Welcome to Tastecraft</h1>
+      <p class="lead">Home of authentic flavors, vibrant atmosphere, and unforgettable dining experiences.</p>
+      <a href="/gen_menu" class="btn btn-outline-warning btn-lg mt-3">Explore Our Menu</a>
+    </div>
+  </div>
+  <div class="row featured-menu mb-5">
+    <div class="col-md-4">
+      <img src="{% static 'images/Appetizer-1.jpg' %}" alt="Appetizer">
+      <h5>Appetizers</h5>
+      <p>Start your journey with our delicious small bites and signature starters.</p>
+    </div>
+    <div class="col-md-4">
+      <img src="{% static 'images/jollof-and-meat.png' %}" alt="Jollof & Meat">
+      <h5>Main Courses</h5>
+      <p>Enjoy classic and contemporary dishes crafted with fresh, local ingredients.</p>
+    </div>
+    <div class="col-md-4">
+      <img src="{% static 'images/cheese.JPG' %}" alt="Dessert">
+      <h5>Desserts</h5>
+      <p>End on a sweet note with our irresistible desserts and treats.</p>
+    </div>
+  </div>
+  <div class="why-choose text-center mb-5">
+    <h2 class="mb-3">Why Choose Tastecraft?</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <i class="bi bi-star-fill" style="font-size:2rem;color:black;"></i>
+        <h5 class="mt-2">Quality Ingredients</h5>
+        <p>We source only the freshest and finest ingredients for every dish.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="bi bi-people-fill" style="font-size:2rem;color:black;"></i>
+        <h5 class="mt-2">Warm Hospitality</h5>
+        <p>Our team is dedicated to making you feel at home, every time you visit.</p>
+      </div>
+      <div class="col-md-4">
+        <i class="bi bi-fire" style="font-size:2rem;color:black;"></i>
+        <h5 class="mt-2">Exciting Flavors</h5>
+        <p>Experience a fusion of traditional and modern tastes, inspired by global cuisine.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-5">
+    <div class="col-md-6">
+      <h3>Our Story</h3>
+      <p>Tastecraft is more than a restaurant—it's a celebration of food, culture, and community. Inspired by the best of African and international cuisine, we bring people together for memorable moments and delicious meals.</p>
+      <a href="/gen_about" class="btn btn-outline-warning mt-2">Learn More</a>
+    </div>
+    <div class="col-md-6 text-center">
+      <img src="{% static 'images/chef_image2.png' %}" alt="Chef" class="img-fluid rounded" style="max-width: 300px;">
+    </div>
+  </div>
+  <div class="row mb-5">
+    <div class="col-md-12 text-center">
+      <h3>Book a Table</h3>
+      <p>Ready for a special night out? Reserve your spot and let us treat you to an unforgettable experience.</p>
+      <a href="/gen_contact" class="btn btn-warning btn-lg">Contact Us</a>
+    </div>
+  </div>
+  {% comment %} <!-- Newsletter Signup Section -->
+  <div class="row mb-5 justify-content-center">
+    <div class="col-md-8 text-center">
+      <h2 class="mb-3">Stay Updated</h2>
+      <p>Sign up for our newsletter to get the latest news, offers, and event updates from Tastecraft!</p>
+      <form method="post" action="">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Enter your email" name="newsletter_email" required>
+          <button class="btn btn-warning" type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </div> {% endcomment %}
+</div>
+{% endblock content %}

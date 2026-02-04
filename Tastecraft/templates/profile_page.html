@@ -1,0 +1,264 @@
+{% extends "header_footer.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block title %} Profile - Tastecraft {% endblock title %}
+
+{% block content %}
+
+<style>
+    body {
+        margin-top: 90px;
+        background: #f8f9fa;
+    }
+    .profile-sidebar {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+    .profile-tabs .nav-link {
+        font-weight: 500;
+        color: black;
+    }
+    .profile-tabs .nav-link:hover{
+        color: orange;
+    }
+    .profile-section {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+</style>
+
+<div class="container pt-5">
+    <div class="row">
+        <!-- Sidebar Profile Card -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="profile-sidebar">
+                {% if user_info.passport %}
+                <img src="{{ user_info.passport.url }}" alt="Profile Picture" class="rounded-circle img-fluid mb-3"
+                    style="width: 120px; height: 120px; object-fit: cover;">
+                {% else %}
+                <img src="{% static 'images/default-profile.png' %}" alt="No Profile Picture"
+                    class="rounded-circle img-fluid mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                {% endif %}
+                <h5 class="mb-1">{{ user_info.full_name }}</h5>
+                <p class="text-muted mb-1">@{{ user_info.username }}</p>
+                <p class="text-muted mb-3">Location: {{ user_info.location|default:"Location Not Provided" }}</p>
+                <button type="button" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#editProfileForm">Edit Profile</button>
+            </div>
+        </div>
+
+        <!-- Tabs for Details & Orders -->
+        <div class="col-lg-9 col-md-8">
+            <div class="profile-section">
+                <ul class="nav nav-tabs profile-tabs mb-3" id="profileTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="true">My Details</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">Order History</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="profileTabContent">
+                    <!-- Details Tab -->
+                    <div class="tab-pane fade show active" id="details" role="tabpanel" aria-labelledby="details-tab">
+                        <div class="row mb-2">
+                            <div class="col-sm-4"><strong>Full Name</strong></div>
+                            <div class="col-sm-8 text-muted">{{ user_info.full_name|default:"Not Provided" }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-4"><strong>Email</strong></div>
+                            <div class="col-sm-8 text-muted">{{ user_info.email }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-4"><strong>Username</strong></div>
+                            <div class="col-sm-8 text-muted">{{ user_info.username }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-4"><strong>Phone</strong></div>
+                            <div class="col-sm-8 text-muted">{{ user_info.phone|default:"Not Provided" }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-4"><strong>Address</strong></div>
+                            <div class="col-sm-8 text-muted">{{ user_info.address|default:"Not Provided" }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-sm-4"><strong>Location</strong></div>
+                            <div class="col-sm-8 text-muted">{{ user_info.location|default:"Not Provided" }}</div>
+                        </div>
+                    </div>
+                    <!-- Orders Tab -->
+                    <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                        <div class="card mt-3 mb-0">
+                            <div class="card-body">
+                                <h5 class="card-title">Order History</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Product</th>
+                                                <th>Date</th>
+                                                {% comment %} <th>Quantity</th> {% endcomment %}
+                                                <th>Total Price</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for order in orders %}
+                                            <tr>
+                                                <td>#ORD-{{ order.id }}</td>
+                                                <td>
+                                                    {% for item in order.items.all %}
+                                                    {{ item.name }}{% if not forloop.last %}, {% endif %}
+                                                    {% empty %}No items{% endfor %}
+                                                </td>
+                                                <td>{{ order.date|date:'Y-m-d' }}</td>
+                                                {% comment %} <td></td> {% endcomment %}
+                                                <td>₦{{ order.total|floatformat:2 }}</td>
+                                                <td>
+                                                    {% if order.status == 'Pending' %}
+                                                    <span class="badge bg-warning">Pending</span>
+                                                    {% elif order.status == 'Confirmed' %}
+                                                    <span class="badge bg-info">Confirmed</span>
+                                                    {% elif order.status == 'Completed' %}
+                                                    <span class="badge bg-success">Completed</span>
+                                                    {% elif order.status == 'Cancelled' %}
+                                                    <span class="badge bg-danger">Cancelled</span>
+                                                    {% else %}
+                                                    <span class="badge bg-secondary">{{ order.status }}</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td><button class="btn btn-warning view-order-btn" type="button" data-bs-toggle="modal" data-bs-target="#actionModal" data-order-id="{{ order.id }}">View</button></td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="6" class="text-center text-muted">No orders found</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Profile Modal -->
+            <div class="modal fade" id="editProfileForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog mt-3">
+                    <div class="card mb-4 modal-content">
+                        <div class="card-body">
+                            <h5 class="text-center">Update Profile</h5>
+                            <form id="profileForm" action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" name="full_name" class="form-control" value="{{ user_info.full_name|default_if_none:'' }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" name="phone" class="form-control" value="{{ user_info.phone|default_if_none:'' }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" value="{{ user_info.email|default_if_none:'' }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Address</label>
+                                    <input type="text" name="address" class="form-control" value="{{ user_info.address|default_if_none:'' }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Location</label>
+                                    <input type="text" name="location" class="form-control" value="{{ user_info.location|default_if_none:'' }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Profile Image</label>
+                                    <input type="file" name="profile_image" class="form-control">
+                                    {% if user_info.passport %}
+                                    <small class="text-muted">Current: <a href="{{ user_info.passport.url }}" target="_blank">View Profile Picture</a></small>
+                                    {% endif %}
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="submit" class="btn btn-success text-white">Save Changes</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal -->
+
+        <!-- Modal For Action Button -->
+        <div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-warning fs-3" id="exampleModalLabel">Order Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12">
+                      {% for order in orders %}
+                        <div class="mb-4">
+                          <div class="fw-bold mb-2">Order #ORD-{{ order.id }}</div>
+                          <div class="row g-2">
+                            {% for item in order.items.all %}
+                              <div class="col-12">
+                                <div class="d-flex align-items-center border rounded p-2">
+                                  <img src="{{ item.image.url }}" alt="{{ item.name }}" class="rounded me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                  <div class="flex-grow-1">
+                                    <div class="fw-bold">{{ item.name }}</div>
+                                  </div>
+                                  <div class="text-center mx-3">
+                                    <span class="badge bg-primary">Qty: {{ item.quantity }}</span>
+                                  </div>
+                                  <div class="text-end">
+                                    <span class="badge bg-success">₦{{ item.price|floatformat:2 }}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            {% empty %}
+                              <div class="col-12"><div class="list-group-item">No items found.</div></div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      {% empty %}
+                        <div class="list-group-item">No orders found.</div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    
+                </div>
+                </div>
+            </div>
+          </div>
+        <!-- End Modal For Action Button -->
+
+            <script>
+                // Update profile image if changed
+                if (data.profile_image_url) {
+                    const profileImage = document.querySelector('.rounded-circle.img-fluid');
+                    if (profileImage) {
+                        profileImage.src = data.profile_image_url;
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
