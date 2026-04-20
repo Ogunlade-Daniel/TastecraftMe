@@ -33,7 +33,7 @@ urlpatterns = [
     path('gen_about', views.gen_about, name='gen_about'),
     path('gen_contact', views.gen_contact, name='gen_contact'),
     path('sync_cart/', views.sync_cart, name='sync_cart'),
-    path('gen_cart', views.gen_cart, name='gen_cart'),
+    path('gen_cart/', views.gen_cart, name='gen_cart'),
 
     # the urls for the users
     path('login/', views.login_page, name='login'),

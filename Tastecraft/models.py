@@ -1,6 +1,5 @@
 from django.db import models
 from turtle import reset
-from django.db import models
 from django.contrib.auth.models import User, auth
 
 from django_resized import ResizedImageField
@@ -57,7 +56,7 @@ class User_info(models.Model):
     class Meta:
         managed = True
         db_table = 'user_info' # this is the table name in the database and also for the signup form
-
+    
 class Admin_info(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     passport = ResizedImageField(size=[320,300], upload_to="passport/", null=True, blank=True) # this is for picture resizing when uploaded
