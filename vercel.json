@@ -1,28 +1,17 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "TastecraftMe/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.11" }
-    },
-    {
-      "src": "Tastecraft/static/**/*",
-      "use": "@vercel/static"
+  "buildCommand": "pip install -r requirements.txt && python manage.py collectstatic --noinput",
+  "outputDirectory": "staticfiles",
+  "framework": null,
+  "functions": {
+    "api/index.py": {
+      "runtime": "python3.11"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "TastecraftMe/wsgi.py"
+      "source": "/(.*)",
+      "destination": "/api/index.py"
     }
   ],
   "env": {

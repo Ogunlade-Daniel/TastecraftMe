@@ -1,4 +1,4 @@
-git commit -m "Any message"
 git add .
+git commit -m "Any message"
 git remote add origin https://github.com/Ogunlade-Daniel/TastecraftMe.git
 git push -u origin main
