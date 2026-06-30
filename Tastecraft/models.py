@@ -1,5 +1,4 @@
 from django.db import models
-from turtle import reset
 from django.contrib.auth.models import User, auth
 
 from django_resized import ResizedImageField
