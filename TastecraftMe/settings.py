@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-&t^1whno=*lp4dmt=wnx5ut&b2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,tastecraftme.onrender.com').split(',')
 
 
 # Application definition
@@ -175,5 +175,5 @@ if not DEBUG:
     }
 
 # CORS settings for production
-CORS_ALLOWED_ORIGINS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+CORS_ALLOWED_ORIGINS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,tastecraftme.onrender.com').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://localhost:3000').split(',')
